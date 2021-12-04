@@ -10,22 +10,22 @@ def first_challenge(depth_list):
 
     for depth in depth_list[1:]:
         if depth > last_depth:
+            # print(f"{depth} increased")
             increases += 1
+        else:
+            # print(f"{depth} not increased")
+            pass
+
         last_depth = depth
 
     return increases
 
 
 def second_challenge(depth_list):
-    """
-    Start with -1 increases to exclude the first measurement window increase.
-    I'm sure this can be dealt with better but i have no idea rn.
-    """
-
-    increases = -1
+    increases = 0
     last_measurement_window_sum = 0
 
-    for n in range(0, len(depth_list)):
+    for n in range(1, len(depth_list)):
 
         measurement_window = depth_list[n:n+3]
         if len(measurement_window) < 3:
@@ -46,11 +46,11 @@ def second_challenge(depth_list):
 
 def main():
 
-    with open("01.input", "r") as infile:
+    with open("inputs/01.txt", "r") as infile:
         depth_list = [int(val) for val in infile.read().splitlines()]
 
-        print(first_challenge(depth_list))
-        print(second_challenge(depth_list))
+        print(f"First challenge answer: {first_challenge(depth_list)}")
+        print(f"Second challenge answer: {second_challenge(depth_list)}")
 
 
 if __name__ == '__main__':
