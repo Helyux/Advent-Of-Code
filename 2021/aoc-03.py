@@ -37,11 +37,13 @@ def first_challenge(binary_list):
 
 def second_challenge(binary_list):
 
-    # Check until there is only the most common binary left
     oxygen_rating = binary_list
-    while len(oxygen_rating) > 1:
-        # Check every position individually
-        for pos in range(0, len(binary_list[0])):
+    scrubber_rating = binary_list
+
+    for pos in range(len(binary_list[0])):
+
+        # Check until there is only the most common binary left
+        if len(oxygen_rating) > 1:
             zerobits = 0
             bits = 0
 
@@ -52,23 +54,17 @@ def second_challenge(binary_list):
                 else:
                     bits += 1
 
-            print(f"pos [{str(pos+1):>2}] | n0: [{str(zerobits):>4s}] | n1: [{str(bits):>4s}]", end=" -> ")
+            # print(f"pos [{str(pos + 1):>2}] | n0: [{str(zerobits):>4s}] | n1: [{str(bits):>4s}]", end=" -> ")
 
             if zerobits > bits:
-                print("Keeping 0-bit entrys for this pos")
+                # print("Keeping 0-bit entrys for this pos | Oxygen Rating")
                 oxygen_rating = [x for x in oxygen_rating if x[pos] != "1"]
-            else:
-                print("Keeping 1-bit entrys for this pos")
+            elif bits >= zerobits:
+                # print("Keeping 1-bit entrys for this pos | Oxygen Rating")
                 oxygen_rating = [x for x in oxygen_rating if x[pos] != "0"]
 
-    x = 0
-    print(x)
-
-    # Check until there is only the least common binary left
-    scrubber_rating = binary_list
-    while len(scrubber_rating) > 1:
-        # Check every position individually
-        for pos in range(0, len(binary_list[0])):
+        # Check until there is only the least common binary left
+        if len(scrubber_rating) > 1:
             zerobits = 0
             bits = 0
 
@@ -79,14 +75,14 @@ def second_challenge(binary_list):
                 else:
                     bits += 1
 
-            print(f"pos [{str(pos + 1):>2s}] | n0: [{str(zerobits):>4s}] | n1: [{str(bits):>4s}]", end=" -> ")
+            # print(f"pos [{str(pos + 1):>2s}] | n0: [{str(zerobits):>4s}] | n1: [{str(bits):>4s}]", end=" -> ")
 
-            if bits > zerobits:
-                print("Keeping 0-bit entrys for this pos")
-                scrubber_rating = [x for x in scrubber_rating if x[pos] != "1"]
-            else:
-                print("Keeping 1-bit entrys for this pos")
+            if zerobits > bits:
+                # print("Keeping 1-bit entrys for this pos | Scrubber Rating")
                 scrubber_rating = [x for x in scrubber_rating if x[pos] != "0"]
+            elif bits >= zerobits:
+                # print("Keeping 0-bit entrys for this pos | Scrubber Rating")
+                scrubber_rating = [x for x in scrubber_rating if x[pos] != "1"]
 
     # Binary to decimal numbers
     oxygen = int("".join(oxygen_rating), 2)
