@@ -16,7 +16,7 @@ class Board:
         for row in range(self.width):
             for column in range(self.height):
                 if self.board[row][column] == draw:
-                    print(f"Found a match [{self.board[row][column]}] in row [{row+1}] in column [{column+1}]")
+                    # print(f"Found a match [{self.board[row][column]}] in row [{row+1}] in column [{column+1}]")
                     self.matches[row][column] = True
 
     def check_winning(self):
@@ -50,7 +50,7 @@ class Board:
 
 def get_clean_input():
 
-    with open("inputs/sample.txt", "r") as infile:
+    with open("inputs/04.txt", "r") as infile:
         all_lines = [line.rstrip() for line in infile.readlines()]
         draws = [int(draw) for draw in all_lines[0].split(",")]
 
@@ -67,7 +67,7 @@ def get_clean_input():
         boards.append(board)
 
     # [print(board) for board in boards]
-    boards = [Board(board) for board in boards]
+    # boards = [Board(board) for board in boards]
 
     return draws, boards
 
@@ -86,24 +86,23 @@ def second_challenge(draws, boards):
 
     winning_boards = []
     for draw in draws:
-        print(f"Draw is [{draw}] | Number of boards is [{len(boards)}]")
+        # print(f"\nDraw is [{draw}] | Number of boards is [{len(boards)}]")
         for board in boards:
-            if not board.won:
-                board.check_draw(draw)
-                if board.check_winning():
-                    if len(boards) != 1:
-                        boards.remove(board)
-                    else:
-                        print("won")
-                        return board.get_score(draw)
-        print(len(boards))
+            board.check_draw(draw)
+            old_state = board.won
+            if board.check_winning():
+                if old_state != board.won:
+                    winning_boards.append(board)
+
+                if len(winning_boards) == len(boards):
+                    return winning_boards[-1].get_score(draw)
 
 
 def main():
 
         draws, boards = get_clean_input()
-        print(f"First challenge answer: {first_challenge(draws, boards)}")
-        print(f"Second challenge answer: {second_challenge(draws, boards)}")
+        print(f"First challenge answer: {first_challenge(draws, [Board(board) for board in boards])}")
+        print(f"Second challenge answer: {second_challenge(draws, [Board(board) for board in boards])}")
 
 
 if __name__ == '__main__':
