@@ -1,6 +1,6 @@
 __author__ = "Lukas Mahler"
 __version__ = "1.0.0"
-__date__ = "05.12.2021"
+__date__ = "06.12.2021"
 __email__ = "m@hler.eu"
 
 
@@ -24,7 +24,6 @@ class Board:
         # Check rows for winning
         for row in range(self.width):
             if all([match for match in self.matches[row]]):
-                self.won = True
                 return True
 
         # Check columns for winning
@@ -33,7 +32,6 @@ class Board:
             for row in range(self.width):
                 col.append(self.matches[row][column])
             if all([match for match in col]):
-                self.won = True
                 return True
 
         return False
@@ -66,14 +64,13 @@ def get_clean_input():
             board.append(board_line)
         boards.append(board)
 
-    # [print(board) for board in boards]
-    # boards = [Board(board) for board in boards]
-
     return draws, boards
 
 
 def first_challenge(draws, boards):
-    # First board to win
+    """ First board to win """
+    boards = [Board(board) for board in boards]
+
     for draw in draws:
         for board in boards:
             board.check_draw(draw)
@@ -82,27 +79,27 @@ def first_challenge(draws, boards):
 
 
 def second_challenge(draws, boards):
-    # Last board to win
+    """ Last board to win """
+    boards = [Board(board) for board in boards]
 
     winning_boards = []
     for draw in draws:
         # print(f"\nDraw is [{draw}] | Number of boards is [{len(boards)}]")
         for board in boards:
-            board.check_draw(draw)
-            old_state = board.won
-            if board.check_winning():
-                if old_state != board.won:
+            if not board.won:
+                board.check_draw(draw)
+                if board.check_winning():
+                    board.won = True
                     winning_boards.append(board)
-
-                if len(winning_boards) == len(boards):
-                    return winning_boards[-1].get_score(draw)
+                    if len(winning_boards) == len(boards):
+                        return winning_boards[-1].get_score(draw)
 
 
 def main():
 
-        draws, boards = get_clean_input()
-        print(f"First challenge answer: {first_challenge(draws, [Board(board) for board in boards])}")
-        print(f"Second challenge answer: {second_challenge(draws, [Board(board) for board in boards])}")
+    draws, boards = get_clean_input()
+    print(f"First challenge answer: {first_challenge(draws, boards)}")
+    print(f"Second challenge answer: {second_challenge(draws, boards)}")
 
 
 if __name__ == '__main__':
