@@ -5,20 +5,23 @@ __email__ = "m@hler.eu"
 
 
 def get_clean_input():
-    with open("inputs/XX.txt", "r") as infile:
-        inputs = [int(val) for val in infile.read().splitlines()]
+
+    with open("inputs/XX.txt", "r") as f:
+        inputs = [line.strip() for line in f]
 
     return inputs
 
 
 def first_challenge(inputs):
 
+    answer = None
 
     return answer
 
 
 def second_challenge(inputs):
 
+    answer = None
 
     return answer
 
