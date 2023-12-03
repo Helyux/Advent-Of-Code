@@ -17,17 +17,15 @@ def first_challenge(inputs):
     answer = 0
     static_max = {"red": 12, "green": 13, "blue": 14}
 
-    for i, game_line in enumerate(inputs):
+    for game_id, game_line in enumerate(inputs, 1):
 
         maxes = {"red": 0, "green": 0, "blue": 0}
 
-        game_id = i+1
         game_line = game_line.replace(f"Game {game_id}: ", "")
         subsets = [subset.strip() for subset in game_line.split(";")]
         for subset in subsets:
-            cubes = subset.split(",")
-            for cube in cubes:
-                cube_n, cube_color = cube.split()
+            cubes = [cube.split() for cube in subset.split(",")]
+            for cube_n, cube_color in cubes:
                 if int(cube_n) > maxes[cube_color]:
                     maxes[cube_color] = int(cube_n)
 
@@ -47,17 +45,15 @@ def second_challenge(inputs):
 
     answer = 0
 
-    for i, game_line in enumerate(inputs):
+    for game_id, game_line in enumerate(inputs, 1):
 
         maxes = {"red": 0, "green": 0, "blue": 0}
 
-        game_id = i+1
         game_line = game_line.replace(f"Game {game_id}: ", "")
         subsets = [subset.strip() for subset in game_line.split(";")]
         for subset in subsets:
-            cubes = subset.split(",")
-            for cube in cubes:
-                cube_n, cube_color = cube.split()
+            cubes = [cube.split() for cube in subset.split(",")]
+            for cube_n, cube_color in cubes:
                 if int(cube_n) > maxes[cube_color]:
                     maxes[cube_color] = int(cube_n)
 
