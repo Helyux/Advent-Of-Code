@@ -45,9 +45,9 @@ def second_challenge(inputs):
             if char.isdigit():
                 digits.append(char)
 
-            for char_val, char_key in enumerate(num_list):
+            for char_val, char_key in enumerate(num_list, 1):
                 if calibration_line[idx:].startswith(char_key):
-                    digits.append(str(char_val+1))
+                    digits.append(str(char_val))
 
         answer += int(f"{digits[0]}{digits[-1]}")
 
